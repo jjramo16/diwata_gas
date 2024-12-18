@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diwata Gas Management</title>
+    <style>
+        body {
+            background-color: #e0e7ff; /* Soft blue background */
+            color: #333; /* Dark gray text */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            gap: 30px;
+            justify-content: space-between;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .form-container {
+            background-color: #fff; /* White background */
+            padding: 30px;
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Strong shadow */
+            flex: 1;
+        }
+
+        h1 {
+            color: #0f2966; /* Rich blue heading text */
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+            color: #4b5563; /* Dark gray labels */
+        }
+
+        input[type="text"], input[type="date"], input[type="submit"], select, input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #d1d5db; /* Light gray border */
+            border-radius: 8px; /* Slightly rounded */
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="date"]:focus, select:focus {
+            border-color: #142746; /* Blue border on focus */
+            outline: none;
+        }
+
+        input[type="submit"] {
+            background-color: #3464b3; /* Blue submit button */
+            color: #fff; /* White text */
+            cursor: pointer; /* Pointer cursor */
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3b879c; /* Darker blue on hover */
+        }
+
+        .container p {
+            color: #16a34a; /* Green text for success message */
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Diwata Customer Complaint Form -->
+        <div class="form-container">
+            <h1>Diwata Gas Customer Complaint Form</h1>
+            <form id="customerComplaintForm" enctype="multipart/form-data">
+                <label for="CustomerComplaintName">Name</label>
+                <input type="text" name="CustomerComplaintName" id="CustomerComplaintName" placeholder="Enter Name" required>
+
+                <label for="ComplaintSerialNo">Cylinder Serial No</label>
+                <input type="text" name="ComplaintSerialNo" id="ComplaintSerialNo" placeholder="Enter Serial Number" required>
+
+                <label for="CustomerComplaintContactNumber">Contact Number</label>
+                <input type="text" name="CustomerComplaintContactNumber" id="CustomerComplaintContactNumber" placeholder="Enter Contact Number" required>
+
+                <label for="ChiefComplaint">Complaint Details</label>
+                <div id="ChiefComplaint" style="height: 150px; overflow-y: scroll; border: 1px solid #ccc; padding: 5px;">
+                    <label><input type="checkbox" name="ChiefComplaint[]" value="Gauge"> Gauge</label><br>
+                    <label><input type="checkbox" name="ChiefComplaint[]" value="Odor"> Odor</label><br>
+                    <label><input type="checkbox" name="ChiefComplaint[]" value="Leak"> Leak</label><br>
+                    <label><input type="checkbox" name="ChiefComplaint[]" value="Corrosion"> Corrosion</label><br>
+                    <label><input type="checkbox" name="ChiefComplaint[]" value="Dents/Damage"> Dents/Damage</label><br>
+                    <label><input type="checkbox" name="ChiefComplaint[]" value="Clogged"> Clogged</label><br>
+                    <label><input type="checkbox" name="ChiefComplaint[]" value="Unusual Noise"> Unusual Noise</label><br>
+                    <label><input type="checkbox" name="ChiefComplaint[]" value="Others"> Others</label>
+                </div>
+                
+                <label for="ComplaintDetails">Details</label>
+                <input type="text" name="ComplaintDetails" id="ComplaintDetails" placeholder="Enter Complaint Details" required>
+
+                <label for="ComplaintDateTime">Complaint Date and Time</label>
+                <input type="datetime-local" name="ComplaintDateTime" id="ComplaintDateTime" required>
+                
+                <label for="picture">Attach Picture:</label>
+                <input type="file" name="picture" id="picture" accept="image/*" required>
+
+                <input type="submit" id="SaveCustomerComplaint" value="Send Complaint">
+                <p id="customerComplaintSaved"></p>
+            </form>
+        </div>
+
+        <!-- Diwata Customer Response Form -->
+        <div class="form-container">
+            <h1>Diwata Gas Customer Complaint Resolution</h1>
+            <form id="customerResForm">
+                <label for="ComplaintID">Complaint ID</label>
+                <input type="text" name="ComplaintID" id="ComplaintID" placeholder="Enter Complaint ID" required>
+
+                <label for="SerialNo">Cylinder Serial No</label>
+                <input type="text" name="SerialNo" id="SerialNo" placeholder="Enter Serial Number" required>
+
+                <label for="ForReplacement">For Replacement?</label>
+                <select name="ForReplacement" id="ForReplacement" required>
+                    <option value="" disabled selected></option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+
+                <label for="ResComment">Comment</label>
+                <input type="text" name="ResComment" id="ResComment" placeholder="Enter Comment" required>
+                
+                <input type="submit" id="SaveResponse" value="Save Response">
+                <p id="customerResponseSaved"></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('customerComplaintForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const chiefComplaintValues = [];
+            const checkboxes = document.querySelectorAll('input[name="ChiefComplaint[]"]:checked');
+            checkboxes.forEach((checkbox) => {
+                chiefComplaintValues.push(checkbox.value);
+            });
+
+            formData.set('ChiefComplaint', chiefComplaintValues.join(', '));
+            formData.set('ComplaintSerialNo', formData.get('ComplaintSerialNo')); // Add ComplaintSerialNo to FormData
+
+            const pictureFile = formData.get('picture');
+            const objectKey = `${formData.get('CustomerComplaintName').replace(/\s+/g, '_')}_${Date.now()}`;
+            const pictureBucketUrl = `https://diwata-gas-bucket.s3.us-east-1.amazonaws.com/landing/CustomerComplaint/images/${objectKey}`;
+            const jsonBucketUrl = `https://diwata-gas-bucket.s3.us-east-1.amazonaws.com/landing/CustomerComplaint/${objectKey}.json`;
+
+            // Upload the image
+            fetch(pictureBucketUrl, {
+                method: 'PUT',
+                body: pictureFile,
+                headers: {
+                    'Content-Type': pictureFile.type
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    formData.set('picture', pictureBucketUrl);
+
+                    const jsonData = Object.fromEntries(formData.entries()); // Capture all form entries
+
+                    // Upload the JSON data
+                    return fetch(jsonBucketUrl, {
+                        method: 'PUT',
+                        body: JSON.stringify(jsonData),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                } else {
+                    throw new Error('Image upload failed');
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('customerComplaintSaved').innerText = "Complaint saved successfully!";
+                } else {
+                    throw new Error('JSON upload failed');
+                }
+            })
+            .catch(error => {
+                document.getElementById('customerComplaintSaved').innerText = "Error saving complaint.";
+                console.error('Error:', error);
+            });
+        });
+
+
+        document.getElementById('customerResForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            
+            const objectKey = `${formData.get('ComplaintID').replace(/\s+/g, '_')}_${Date.now()}.json`;
+            const bucketUrl = `https://diwata-gas-bucket.s3.us-east-1.amazonaws.com/landing/CustomerResolution/${objectKey}`;
+            
+            fetch(bucketUrl, {
+                method: 'PUT',
+                body: JSON.stringify(Object.fromEntries(formData)),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('customerResponseSaved').innerText = "Customer resolution saved successfully!";
+                } else {
+                    document.getElementById('customerResponseSaved').innerText = "Error saving resolution.";
+                    console.error('Failed to upload:', response.statusText);
+                }
+            })
+            .catch(error => {
+                document.getElementById('customerResponseSaved').innerText = "Error saving resolution.";
+                console.error('Error:', error);
+            });
+        });
+        
+    </script>
+</body>
+</html>

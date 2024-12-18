@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diwata Gas Management</title>
+    <style>
+        body {
+            background-color: #e0e7ff; /* Soft blue background */
+            color: #333; /* Dark gray text */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            gap: 30px;
+            justify-content: space-between;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .form-container {
+            background-color: #fff; /* White background */
+            padding: 30px;
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Strong shadow */
+            flex: 1;
+        }
+
+        h1 {
+            color: #0f2966; /* Rich blue heading text */
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+            color: #4b5563; /* Dark gray labels */
+        }
+
+        input[type="text"], input[type="date"], input[type="submit"], select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #d1d5db; /* Light gray border */
+            border-radius: 8px; /* Slightly rounded */
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="date"]:focus, select:focus {
+            border-color: #142746; /* Blue border on focus */
+            outline: none;
+        }
+
+        input[type="submit"] {
+            background-color: #3464b3; /* Blue submit button */
+            color: #fff; /* White text */
+            cursor: pointer; /* Pointer cursor */
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3b879c; /* Darker blue on hover */
+        }
+
+        .container p {
+            color: #16a34a; /* Green text for success message */
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- First Form: Diwata Gas Order Management -->
+        <div class="form-container">
+            <h1>Diwata Gas Order Management</h1>
+            <form id="orderForm">
+                <label for="BranchName">Branch</label>
+                <select name="BranchName" id="BranchName" required>
+                    <option value="" disabled selected>Select a Branch</option>
+                    <option value="Quezon City">Quezon City</option>
+                    <option value="Makati City">Makati City</option>
+                    <option value="Pasig City">Pasig City</option>
+                </select>
+
+                <label for="OrderName">Customer</label>
+                <input type="text" name="OrderName" id="OrderName" placeholder="Enter Customer Name" required>
+
+                <label for="OrderDate">Order Date</label>
+                <input type="date" name="OrderDate" id="OrderDate" required>
+
+                <label for="PaymentType">Payment Type</label>
+                <select name="PaymentType" id="PaymentType" required>
+                    <option value="" disabled selected>Select a Payment Type</option>
+                    <option value="Cash">Cash</option>
+                    <option value="GCash">GCash</option>
+                    <option value="Credit Card">Credit Card</option>
+                    <option value="Debit Card">Debit Card</option>
+                </select>
+                
+                <label for="DocumentReferenceType">Document Reference Type</label>
+                <select name="DocumentReferenceType" id="DocumentReferenceType" required>
+                    <option value="" disabled selected>Select a Document Reference Type</option>
+                    <option value="DeliveryReceipt">Delivery Receipt</option>
+                    <option value="SalesInvoice">Sales Invoice</option>
+                </select>
+
+                <label for="DocumentReferenceNumber">Document Reference Number</label>
+                <input type="text" name="DocumentReferenceNumber" id="DocumentReferenceNumber" placeholder="Enter Document Reference Number" required>
+
+                <label for="SerialNo">Tank Serial Numbers</label>
+                <div id="SerialNo" style="height: 150px; overflow-y: scroll; border: 1px solid #ccc; padding: 5px;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="Y76-917600"> Y76-917600</label>
+                        <input type="text" name="Price[Y76-917600]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="h22-534522"> h22-534522</label>
+                        <input type="text" name="Price[h22-534522]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="L22-621685"> L22-621685</label>
+                        <input type="text" name="Price[L22-621685]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="K24-041119"> K24-041119</label>
+                        <input type="text" name="Price[K24-041119]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="A22-590013"> A22-590013</label>
+                        <input type="text" name="Price[A22-590013]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="f26-964896"> f26-964896</label>
+                        <input type="text" name="Price[f26-964896]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="I10-368855"> I10-368855</label>
+                        <input type="text" name="Price[I10-368855]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="i24-598930"> i24-598930</label>
+                        <input type="text" name="Price[i24-598930]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="g72-696318"> g72-696318</label>
+                        <input type="text" name="Price[g72-696318]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="e90-053461"> e90-053461</label>
+                        <input type="text" name="Price[e90-053461]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="d44-824467"> d44-824467</label>
+                        <input type="text" name="Price[d44-824467]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="J02-217692"> J02-217692</label>
+                        <input type="text" name="Price[J02-217692]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="h37-696543"> h37-696543</label>
+                        <input type="text" name="Price[h37-696543]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="o90-129854"> o90-129854</label>
+                        <input type="text" name="Price[o90-129854]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="N81-768616"> N81-768616</label>
+                        <input type="text" name="Price[N81-768616]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="j34-123899"> j34-123899</label>
+                        <input type="text" name="Price[j34-123899]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="x07-849092"> x07-849092</label>
+                        <input type="text" name="Price[x07-849092]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="c22-713820"> c22-713820</label>
+                        <input type="text" name="Price[c22-713820]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="Z78-639086"> Z78-639086</label>
+                        <input type="text" name="Price[Z78-639086]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="g63-887030"> g63-887030</label>
+                        <input type="text" name="Price[g63-887030]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="P94-716109"> P94-716109</label>
+                        <input type="text" name="Price[P94-716109]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="m31-133194"> m31-133194</label>
+                        <input type="text" name="Price[m31-133194]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label><input type="checkbox" name="SerialNo[]" value="Y16-383298"> Y16-383298</label>
+                        <input type="text" name="Price[Y16-383298]" placeholder="Enter Price" style="width: 100px;"/>
+                    </div><br>
+                </div>
+
+                <input type="submit" value="Save Order">
+                <p id="orderSaved"></p>
+            </form>
+        </div>
+
+        <!-- Second Form: Diwata Gas Customer Registration -->
+        <div class="form-container">
+            <h1>Diwata Gas Customer Registration</h1>
+            <form id="customerForm">
+                <label for="CustomerName">Name</label>
+                <input type="text" name="CustomerName" id="CustomerName" placeholder="Enter Name" required>
+
+                <label for="CustomerType">Customer Type</label>
+                <select name="CustomerType" id="CustomerType" required>
+                    <option value="" disabled selected>Select Customer Type</option>
+                    <option value="Direct Customer">Direct Customer</option>
+                    <option value="Dealer">Dealer</option>
+                </select>
+
+                <label for="CustomerAddress">Customer Address</label>
+                <input type="text" name="CustomerAddress" id="CustomerAddress" placeholder="Enter Address" required>
+
+                <label for="AreaRegion">Region</label>
+                <select name="AreaRegion" id="AreaRegion" required>
+                    <option value="" disabled selected>Select Region</option>
+                    <option value="NCR">National Capital Region (NCR)</option>
+                    <option value="Region IV-A">Region IV-A (CALABARZON)</option>
+                    <option value="Region VII">Region VII (Central Visayas)</option>
+                </select>
+
+                <label for="AreaProvince">Province</label>
+                <select name="AreaProvince" id="AreaProvince" required>
+                    <option value="" disabled selected>Select Province</option>
+                    <option value="Metro Manila">Metro Manila</option>
+                    <option value="Cavite">Cavite</option>
+                    <option value="Cebu">Cebu</option>
+                </select>
+
+                <label for="AreaCity">City</label>
+                <select name="AreaCity" id="AreaCity" required>
+                    <option value="" disabled selected>Select City</option>
+                    <option value="Quezon City">Quezon City</option>
+                    <option value="Makati City">Makati City</option>
+                    <option value="Cebu City">Cebu City</option>
+                </select>
+
+                <label for="AreaBarangay">Barangay</label>
+                <select name="AreaBarangay" id="AreaBarangay" required>
+                    <option value="" disabled selected>Select Barangay</option>
+                    <option value="Barangay Bagong Pag-asa">Barangay Bagong Pag-asa</option>
+                    <option value="Barangay Guadalupe Nuevo">Barangay Guadalupe Nuevo</option>
+                    <option value="Barangay Lahug">Barangay Lahug</option>
+                </select>
+
+                <label for="ContactNumber">Contact Number</label>
+                <input type="text" name="ContactNumber" id="ContactNumber" placeholder="Enter Contact Number" required>
+
+                <label for="SalesPersonName">Salesperson Name</label>
+                <select name="SalesPersonName" id="SalesPersonName" required>
+                    <option value="" disabled selected>Select Salesperson Name</option>
+                    <option value="JJ Ramoso">JJ Ramoso</option>
+                    <option value="RG Laylo">RG Laylo</option>
+                    <option value="PM Medina">PM Medina</option>
+                </select>
+
+                <input type="submit" id="SaveCustomer" value="Save Customer">
+                <p id="customerSaved"></p>
+            </form>
+        </div>
+
+        <!-- Third Form: Diwata Gas Logistics -->
+        <div class="form-container">
+            <h1>Diwata Gas Logistics</h1>
+            <form id="logisticsForm">
+
+                <label for="LogisticsID">Logistics ID</label>
+                <input type="text" name="LogisticsID" id="LogisticsID" placeholder="Enter Logistics ID" required>
+
+                <label for="DriverName">Driver Name</label>
+                <select name="DriverName" id="DriverName" required>
+                    <option value="" disabled selected>Select Driver Name</option>
+                    <option value="JJ Ramoso">JJ Ramoso</option>
+                    <option value="PM Medina">PM Medina</option>
+                    <option value="RG Laylo">RG Laylo</option>
+                </select>
+
+                <label for="DeliveryDate">Delivery Date</label>
+                <input type="date" name="DeliveryDate" id="DeliveryDate" required>
+
+                <label for="PickUpDate">Pick Up Date</label>
+                <input type="date" name="PickUpDate" id="PickUpDate">
+
+                <input type="submit" id="SaveLogistics" value="Save Logistics">
+                <p id="logisticsSaved"></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('orderForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Collect basic form data
+            const formData = {
+                BranchName: document.getElementById('BranchName').value,
+                OrderName: document.getElementById('OrderName').value,
+                DocumentReferenceType: document.getElementById('DocumentReferenceType').value,
+                DocumentReferenceNumber: document.getElementById('DocumentReferenceNumber').value,
+                OrderDate: document.getElementById('OrderDate').value,
+                PaymentType: document.getElementById('PaymentType').value
+            };
+
+            // Collect serial numbers and prices
+            const serialNumberElements = document.querySelectorAll('input[name="SerialNo[]"]:checked');
+            const prices = {};
+            serialNumberElements.forEach(el => {
+                const serialNumber = el.value;
+                const priceInput = document.querySelector(`input[name="Price[${serialNumber}]"]`);
+                if (priceInput) {
+                    prices[serialNumber] = priceInput.value;
+                }
+            });
+
+            formData.Prices = prices;
+
+            // Convert form data to JSON
+            const data = JSON.stringify(formData);
+
+            // Create a unique object key for S3
+            const objectKey = `${formData.OrderName}_${formData.OrderDate}_${Date.now()}.json`;
+            const bucketUrl = `https://diwata-gas-bucket.s3.us-east-1.amazonaws.com/landing/Orders/${objectKey}`;
+
+            // Upload data to S3
+            fetch(bucketUrl, {
+                method: 'PUT',
+                body: data,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('orderSaved').innerText = "Order saved successfully!";
+                } else {
+                    document.getElementById('orderSaved').innerText = "Error saving order.";
+                    console.error('Failed to upload:', response.statusText);
+                }
+            })
+            .catch(error => {
+                document.getElementById('orderSaved').innerText = "Error saving order.";
+                console.error('Error:', error);
+            });
+        });
+
+
+        document.getElementById('customerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = {
+                CustomerName: document.getElementById('CustomerName').value,
+                CustomerType: document.getElementById('CustomerType').value,
+                CustomerAddress: document.getElementById('CustomerAddress').value,
+                AreaRegion: document.getElementById('AreaRegion').value,
+                AreaProvince: document.getElementById('AreaProvince').value,
+                AreaCity: document.getElementById('AreaCity').value,
+                AreaBarangay: document.getElementById('AreaBarangay').value,
+                ContactNumber: document.getElementById('ContactNumber').value,
+                SalesPersonName: document.getElementById('SalesPersonName').value,
+            };
+            const data = JSON.stringify(formData);
+            const objectKey = `${formData.CustomerName}_${Date.now()}.json`;
+            const bucketUrl = `https://diwata-gas-bucket.s3.us-east-1.amazonaws.com/sensitive/Customer/${objectKey}`;
+            fetch(bucketUrl, {
+                method: 'PUT',
+                body: data,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('customerSaved').innerText = "Customer saved successfully!";
+                } else {
+                    document.getElementById('customerSaved').innerText = "Error saving customer.";
+                    console.error('Failed to upload:', response.statusText);
+                }
+            })
+            .catch(error => {
+                document.getElementById('customerSaved').innerText = "Error saving customer.";
+                console.error('Error:', error);
+            });
+        });
+
+        document.getElementById('logisticsForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = {
+                LogisticsID: document.getElementById('LogisticsID').value,
+                DriverName: document.getElementById('DriverName').value,
+                DeliveryDate: document.getElementById('DeliveryDate').value,
+                PickUpDate: document.getElementById('PickUpDate').value
+            };
+            const data = JSON.stringify(formData);
+            const objectKey = `${formData.DriverName}_${formData.DeliveryDate}.json`;
+            const bucketUrl = `https://diwata-gas-bucket.s3.us-east-1.amazonaws.com/Logistics/landing/${objectKey}`;
+            fetch(bucketUrl, {
+                method: 'PUT',
+                body: data,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        });
+
+    </script>
+</body>
+</html>
